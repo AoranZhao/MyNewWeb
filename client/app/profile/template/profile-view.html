@@ -1,0 +1,306 @@
+<div class="container">
+	<div class="panel panel-primary">
+		<div class="panel-heading">
+			<div class="panel-title">
+				<div class="row">
+					<div class="col-xs-6">
+						Photo
+					</div>
+					<div class="col-xs-6 text-right">
+						<button href="#" class="btn btn-warning btn-sm" ng-click="pc.showPortraitChanger()">Change</button>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="panel-body">
+			<img src="../../..{{pc.profile.portrait}}" alt="">
+			<form ng-show="pc.changePortrait">
+				<input type="file" ngf-select accept="image/*" ng-model="pc.portrait" />
+				<img ngf-thumbnail="pc.portrait" >
+				<button ng-click="pc.uploadPortrait(pc.portrait)">Upload</button>
+			</form>
+		</div>
+	</div>
+	<form ng-submit="pc.saveProfile(form)" id="form" name="form" novalidate>
+		<div class="panel panel-primary">	
+			<div class="panel-heading">
+				<div class="panel-title">
+					<div class="row">
+						<div class="col-xs-6">
+							Info
+						</div>
+						<div class="col-xs-6 text-right">
+							<button type="submit" class="btn btn-warning btn-sm">Save</button>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="panel-body">
+				<div class="form-group">
+					<label>Lname: </label>
+					<input type="text" class="form-control" name="lname" ng-model="pc.profile.lname" />
+				</div>
+				<div class="form-group">
+					<label>Fname: </label>
+					<input type="text" class="form-control" name="fname" ng-model="pc.profile.fname" />
+				</div>
+				<div class="form-group">
+					<label>Email: </label>
+					<input type="text" class="form-control" name="email" ng-model="pc.profile.email" />
+				</div>
+				<div class="form-group">
+					<label>Description: </label>
+					<input type="text" class="form-control" name="description" ng-model="pc.profile.description" />
+				</div>
+				<div class="form-group">
+					<label>Phone: </label>
+					<input type="text" class="form-control" name="phone" ng-model="pc.profile.phone" />
+				</div>
+				<div class="form-group">
+					<label>Address: </label>
+					<input type="text" class="form-control" name="address" ng-model="pc.profile.coordinate.address" />
+				</div>
+				<div class="form-group">
+					<label>City: </label>
+					<input type="text" class="form-control" name="city" ng-model="pc.profile.coordinate.city" />
+				</div>
+				<div class="form-group">
+					<label>State: </label>
+					<input type="text" class="form-control" name="state" ng-model="pc.profile.coordinate.state" />
+				</div>
+				<div class="form-group">
+					<label>Zip: </label>
+					<input type="text" class="form-control" name="zip" ng-model="pc.profile.coordinate.zip" />
+				</div>
+				<div class="form-group">
+					<label>Country: </label>
+					<input type="text" class="form-control" name="country" ng-model="pc.profile.coordinate.country" />
+				</div>
+			</div>
+		</div>
+	</form>
+	<div class="panel panel-primary">
+		<div class="panel-heading">
+			<div class="panel-title">
+				<div class="row">
+					<div class="col-xs-6">
+						Educations
+					</div>
+					<div class="col-xs-6 text-right">
+						<button class="btn btn-warning btn-sm" ng-click="pc.showEducationAdder()">Add</button>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="panel-body list-group">
+			<div class="list-group-item" ng-repeat="education in pc.profile.educations">
+				<!-- <small class="pull-right">({{education.start | date:'yyyy'}} - {{education.end | date: 'yyyy'}})</small>
+				<h4>{{education.title}}</h4>
+				<h5 style="color: blue;">{{education.school}}</h5>
+				<p>{{education.description}}</p> -->
+				<div class="form-group">
+					<label>Title: </label>
+					<input type="text" class="form-control" name="title" ng-model="education.title" />
+				</div>
+				<div class="form-group">
+					<label>Start</label>
+					<p class="input-group">
+				    	<input type="text" class="form-control" name="start" uib-datepicker-popup="dd-MMM-yyyy" ng-model="education.start" is-open="pc.openEduStartDatePickers[$index]" ng-required="true" formate-edu-date />
+				        <span class="input-group-btn">
+				          	<button type="button" class="btn btn-default" ng-click="pc.openEduStartTime($event, $index)"><i class="glyphicon glyphicon-calendar"></i></button>
+				        </span>
+				    </p>
+				</div>
+				<div class="form-group">
+					<label>End</label>
+					<p class="input-group">
+				    	<input type="text" class="form-control" name="end" uib-datepicker-popup="dd-MMM-yyyy" ng-model="education.end" is-open="pc.openEduEndDatePickers[$index]" ng-required="true" formate-edu-date />
+				        <span class="input-group-btn">
+				          	<button type="button" class="btn btn-default" ng-click="pc.openEduEndTime($event, $index)"><i class="glyphicon glyphicon-calendar"></i></button>
+				        </span>
+				    </p>
+				</div>
+				<div class="form-group">
+					<label>School: </label>
+					<input type="text" class="form-control" name="school" ng-model="education.school" />
+				</div>
+				<div class="form-group">
+					<label>Description: </label>
+					<input type="text" class="form-control" name="description" ng-model="education.description" />
+				</div>
+				<a ng-click="pc.updateEducation()" href="#">Update</a>
+				<a ng-click="pc.removeEducation(education)" href="#"><span class="fa fa-trash"></span></a>
+			</div>
+			<div class="list-group-item" ng-show="pc.addEducation">
+				<form ng-submit="pc.saveEducation(eduForm)" id="eduForm" name="eduForm" novalidate>
+					<div class="form-group">
+						<label>Title: </label>
+						<input type="text" class="form-control" name="title" ng-model="pc.newEducation.title" />
+					</div>
+					<div class="form-group">
+						<label>Start</label>
+						<p class="input-group">
+				          <input type="text" class="form-control" name="start" uib-datepicker-popup="dd-MMM-yyyy" ng-model="pc.newEducation.start" is-open="pc.popupNewEduStart.opened" ng-required="true" />
+				          <span class="input-group-btn">
+				            <button type="button" class="btn btn-default" ng-click="pc.openNewEduStart()"><i class="glyphicon glyphicon-calendar"></i></button>
+				          </span>
+				        </p>
+					</div>
+					<div class="form-group">
+						<label>End</label>
+						<p class="input-group">
+				          <input type="text" class="form-control" name="end" uib-datepicker-popup="dd-MMM-yyyy" ng-model="pc.newEducation.end" is-open="pc.popupNewEduEnd.opened" ng-required="true" />
+				          <span class="input-group-btn">
+				            <button type="button" class="btn btn-default" ng-click="pc.openNewEduEnd()"><i class="glyphicon glyphicon-calendar"></i></button>
+				          </span>
+				        </p>
+					</div>
+					<div class="form-group">
+						<label>School: </label>
+						<input type="text" class="form-control" name="school" ng-model="pc.newEducation.school" />
+					</div>
+					<div class="form-group">
+						<label>Description: </label>
+						<input type="text" class="form-control" name="description" ng-model="pc.newEducation.description" />
+					</div>
+					<div class="form-group">
+						<button class="btn btn-default" ng-click="pc.closeEducationAdder()">Close</button>
+						<button class="btn btn-primary" type="submit">Save</button>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+	<div class="panel panel-primary">
+		<div class="panel-heading">
+			<div class="panel-title">
+				<div class="row">
+					<div class="col-xs-6">
+						Experiences
+					</div>
+					<div class="col-xs-6 text-right">
+						<button class="btn btn-warning btn-sm" ng-click="pc.showExperienceAdder()">Add</button>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="panel-body list-group">
+			<div class="list-group-item" ng-repeat="experience in pc.profile.experiences">
+				<div class="form-group">
+					<label>Title: </label>
+					<input type="text" class="form-control" name="title" ng-model="experience.title" />
+				</div>
+				<div class="form-group">
+					<label>Company: </label>
+					<input type="text" class="form-control" name="company" ng-model="experience.company" />
+				</div>
+				<div class="form-group">
+					<label>Description: </label>
+					<input type="text" class="form-control" name="description" ng-model="experience.description" />
+				</div>
+				<div class="form-group">
+					<label>Start: </label>
+					<p class="input-group">
+				    	<input type="text" class="form-control" name="start" uib-datepicker-popup="dd-MMM-yyyy" ng-model="experience.start" is-open="pc.openExpStartDatePickers[$index]" ng-required="true" formate-exp-date />
+				        <span class="input-group-btn">
+				          	<button type="button" class="btn btn-default" ng-click="pc.openExpStartTime($event, $index)"><i class="glyphicon glyphicon-calendar"></i></button>
+				        </span>
+				    </p>
+				</div>
+				<div class="form-group">
+					<label>End: </label>
+					<p class="input-group">
+				    	<input type="text" class="form-control" name="end" uib-datepicker-popup="dd-MMM-yyyy" ng-model="experience.end" is-open="pc.openExpEndDatePickers[$index]" ng-required="true" formate-exp-date />
+				        <span class="input-group-btn">
+				          	<button type="button" class="btn btn-default" ng-click="pc.openExpEndTime($event, $index)"><i class="glyphicon glyphicon-calendar"></i></button>
+				        </span>
+				    </p>
+				</div>
+				<a ng-click="pc.updateExperience()" href="#">Update</a>
+				<a ng-click="pc.removeExperience(experience)" href="#"><span class="fa fa-trash"></span></a>
+			</div>
+			<div class="list-group-item" ng-show="pc.addExperience">
+				<form ng-submit="pc.saveExperience(expForm)" id="expForm" name="expForm" novalidate>
+					<div class="form-group">
+						<label>Title: </label>
+						<input type="text" class="form-control" ng-model="pc.newExperience.title" name="title">
+					</div>
+					<div class="form-group">
+						<label>Company: </label>
+						<input type="text" class="form-control" ng-model="pc.newExperience.company" name="company">
+					</div>
+					<div class="form-group">
+						<label>Description: </label>
+						<input type="text" class="form-control" ng-model="pc.newExperience.description" name="description">
+					</div>
+					<div class="from-group">
+						<label>Start</label>
+						<p class="input-group">
+							<input type="text" class="form-control" name="start" uib-datepicker-popup="dd-MMM-yyyy" ng-model="pc.newExperience.start" is-open="pc.popupNewExpStart.opened" ng-required="true" />
+							<span class="input-group-btn">
+								<button type="button" class="btn btn-default" ng-click="pc.openNewExpStart()"><i class="glyphicon glyphicon-calendar"></i></button>
+							</span>
+						</p>
+					</div>
+					<div class="from-group">
+						<label>End</label>
+						<p class="input-group">
+							<input type="text" class="form-control" name="end" uib-datepicker-popup="dd-MMM-yyyy" ng-model="pc.newExperience.end" is-open="pc.popupNewExpEnd.opened" ng-required="true" />
+							<span class="input-group-btn">
+								<button type="button" class="btn btn-default" ng-click="pc.openNewExpEnd()"><i class="glyphicon glyphicon-calendar"></i></button>
+							</span>
+						</p>
+					</div>
+					<div class="form-group">
+						<button class="btn btn-default" ng-click="pc.closeExperienceAdder()">Close</button>
+						<button class="btn btn-primary" type="submit">Save</button>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+	<div class="panel panel-primary">
+		<div class="panel-heading">
+			<div class="panel-title">
+				<div class="row">
+					<div class="col-xs-6">
+						Skills
+					</div>
+					<div class="col-xs-6 text-right">
+						<button class="btn btn-warning btn-sm" ng-click="pc.showSkillAdder()">Add</button>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="panel-body list-group">
+			<div class="list-group-item" ng-repeat="skill in pc.profile.skills">
+				<div class="form-group">
+					<label>Skill: </label>
+					<input type="text" class="form-control" name="skill" ng-model="skill.skill" />
+				</div>
+				<div class="form-group">
+					<label>Score: </label>
+					<input type="text" class="form-control" name="score" ng-model="skill.score" />
+				</div>
+				<a ng-click="pc.updateSkill()" href="#">Update</a>
+				<a ng-click="pc.removeSkill(skill)" href="#"><span class="fa fa-trash"></span></a>
+			</div>
+			<div class="list-group-item" ng-show="pc.addSkill">
+				<form ng-submit="pc.saveSkill(skiForm)" id="skiForm" name="skiForm" novalidate>
+					<div class="form-group">
+						<label>Skill: </label>
+						<input type="text" class="form-control" name="skill" ng-model="pc.newSkill.skill" />
+					</div>
+					<div class="form-group">
+						<label>Score: </label>
+						<input type="text" class="form-control" name="score" ng-model="pc.newSkill.score" placeholder="pick a number from 0 to 100" />
+					</div>
+					<div class="from-group">
+						<button class="btn btn-default" ng-click="pc.closeSkillAdder()">Close</button>
+						<button class="btn btn-primary" type="submit">Save</button>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>

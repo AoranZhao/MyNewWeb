@@ -1,0 +1,87 @@
+<div class="container">
+	<div class="row">
+		<div class="col-xs-4 well">
+			<img src="../../..{{pc.profile.portrait}}" alt="" class="img-responsive img-thumbnail">
+			<h2 class="text-center">{{pc.profile.fname}} {{pc.profile.lname}}</h2>
+			<div class="panel panel-primary">
+				<div class="panel-heading">
+					<div class="panel-title"> Info</div>
+				</div>
+				<div class="panel-body">
+					<p><i class="glyphicon glyphicon-map-marker"></i> {{pc.profile.coordinate.city + ', ' + pc.profile.coordinate.state + ', ' + pc.profile.coordinate.country}}</p>
+					<p><i class="glyphicon glyphicon-envelope"></i> {{pc.profile.email}}</p>
+					<p><i class="glyphicon glyphicon-phone"/></i> {{pc.profile.phone}}</p>
+				</div>
+			</div>
+			<div class="panel panel-primary">
+				<div class="panel-heading">
+					<div class="panel-title">About Me</div>
+				</div>
+				<div class="panel-body">
+					<p>{{pc.profile.description}}</p>
+				</div>
+			</div>
+			<div>
+				<a href="#" class="btn btn-success text-center"><i class="glyphicon glyphicon-cloud-download"></i> Resume</a>
+				<a href="#" class="btn btn-warning text-center"><i class="glyphicon glyphicon-cloud-download"></i> Portfolio</a>
+			</div>
+		</div>
+		<div class="col-xs-8">
+			<div class="panel panel-primary">
+				<div class="panel-heading">
+					<div class="panel-title text-center">
+						<i class="glyphicon glyphicon-briefcase"></i> Experiences
+					</div>
+				</div>
+				<div class="panel-body">
+					<div class="list-group">
+						<div class="list-group-item" ng-repeat="experience in pc.profile.experiences">
+							<small class="pull-right">({{experience.start | date:'MMM yyyy'}} - {{experience.end | date: 'MMM yyyy'}})</small>
+							<h4>{{experience.title}}</h4>
+							<p>{{experience.description}}</p>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="panel panel-primary">
+				<div class="panel-heading">
+					<div class="panel-title text-center">
+						<i class="glyphicon glyphicon-education"></i> Educations
+					</div>
+				</div>
+				<div class="panel-body">
+					<div class="list-group">
+						<div class="list-group-item" ng-repeat="education in pc.profile.educations">
+							<small class="pull-right">({{education.start | date:'yyyy'}} - {{education.end | date: 'yyyy'}})</small>
+							<h4>{{education.title}}</h4>
+							<h5 style="color: blue;">{{education.school}}</h5>
+							<p>{{education.description}}</p>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="panel panel-primary">
+				<div class="panel-heading">
+					<div class="panel-title text-center">
+						<i class="glyphicon glyphicon-wrench"></i> Skills
+					</div>
+				</div>
+				<div class="panel-body">
+					<div class="row" ng-repeat="skill in pc.profile.skills">
+							<div class="col-xs-3">
+								<p>{{skill.skill}}</p>
+							</div>
+							<div class="col-xs-9">
+								<div class="progress">
+									<div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="{{skill.score}}" aria-valuemin="0" aria-valuemax="100" style="width: {{skill.score}}%;" ng-if="skill.score > 80"></div>
+									<div class="progress-bar progress-bar-info" role="progressbar" aria-valuenow="{{skill.score}}" aria-valuemin="0" aria-valuemax="100" style="width: {{skill.score}}%;" ng-if="skill.score > 60 && skill.score <= 80"></div>
+									<div class="progress-bar progress-bar-warning" role="progressbar" aria-valuenow="{{skill.score}}" aria-valuemin="0" aria-valuemax="100" style="width: {{skill.score}}%;" ng-if="skill.score > 40 && skill.score <= 60"></div>
+									<div class="progress-bar progress-bar-danger" role="progressbar" aria-valuenow="{{skill.score}}" aria-valuemin="0" aria-valuemax="100" style="width: {{skill.score}}%;" ng-if="skill.score <= 40"></div>
+								</div>
+							</div>
+						</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

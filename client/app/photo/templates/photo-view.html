@@ -1,0 +1,12 @@
+<div class="container" ng-init="phc.initPhotoDetail()">
+	<button class="btn btn-primary" ng-click="phc.backTo('photo')">Back</button>
+	<div class="panel panel-default">
+		<div class="panel-heading">
+			<div class="panel-title">{{phc.currentPhoto.title}}</div>
+		</div>
+		<div class="panel-body">
+			<img src="../../..{{phc.currentPhoto.imgUrl}}" alt="">
+			<p>{{phc.currentPhoto.description}}</p>
+		</div>
+	</div>
+</div>
